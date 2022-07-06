@@ -21,7 +21,7 @@ router.get('/users', (req, res) => {
     }
 })
 
-router.post("/register/buyer", async(req, res) => {
+router.post("/register", async(req, res) => {
     try {
         const data = req.body;
         if (req.body.password) {
