@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 12, 2022 at 12:01 PM
+-- Generation Time: Jul 12, 2022 at 04:11 PM
 -- Server version: 10.4.21-MariaDB
--- PHP Version: 8.1.6
+-- PHP Version: 8.0.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `management-hutang`
+-- Database: `management_hutang`
 --
 
 -- --------------------------------------------------------
@@ -67,7 +67,7 @@ CREATE TABLE `users` (
   `no_identitas` varchar(20) DEFAULT NULL,
   `alamat` varchar(100) NOT NULL,
   `no_hp` varchar(20) NOT NULL,
-  `foto_diri` varchar(100) DEFAULT NULL,
+  `foto_diri` varchar(500) DEFAULT NULL,
   `password` varchar(100) NOT NULL,
   `type` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

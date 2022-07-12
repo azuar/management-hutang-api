@@ -27,7 +27,7 @@ router.post("/register", async(req, res) => {
         if (data.password) {
             data.password = crypto.createHash("sha256").update(req.body.password).digest("hex");
         }
-        let query = `INSERT INTO users VALUES ('${data.id_user}', '${data.id_warung}', '${data.id_pembeli}', '${data.nama_warung}', '${data.nama}', '${data.no_identitas}', '${data.alamat}','${data.foto_diri}', '${data.password}')`;
+        let query = `INSERT INTO users VALUES (${data.id_user}, ${data.id_warung}, ${data.id_pembeli}, '${data.nama_warung}', '${data.name}', '${data.no_identitas}', '${data.alamat}', '${data.no_hp}', '${data.foto_diri}', '${data.password}', '${data.type}')`;
         connection.query(query, (error, result) => {
             if (error) {
                 return res.json(error);
