@@ -21,7 +21,7 @@ router.get('/users', (req, res) => {
     }
 })
 
-router.post("/register", async(req, res) => {
+router.post("/register", async (req, res) => {
     try {
         const data = req.body;
         if (data.password) {
@@ -34,6 +34,27 @@ router.post("/register", async(req, res) => {
             }
 
             res.json("Success");
+        })
+    } catch (error) {
+        res.send(error)
+    }
+})
+
+
+router.post("/login", async (req, res) => {
+    try {
+        if (req.body.password) {
+            req.body.password = crypto.createHash("sha256").update(req.body.password).digest("hex");
+        }
+        let query = `SELECT * FROM users WHERE no_hp = '${req.body.no_hp}' AND password = '${req.body.password}'`
+        connection.query(query, (error, result) => {
+            if (error) {
+                return res.json(error);
+            }
+            if (result.length > 0) {
+                return res.json(result[0])
+            }
+            res.status(400).json("Username Or Password Wrong");
         })
     } catch (error) {
         res.send(error)
