@@ -2,9 +2,9 @@ const express = require('express');
 const connection = require('../serverConfig');
 const router = express.Router();
 
-router.get('/hutang', (req, res) => {
+router.get('/preOrder', (req, res) => {
     try {
-        let query = `SELECT * FROM hutang`;
+        let query = `SELECT * FROM pre_order`;
         connection.query(query, (error, result) => {
             if (error) {
                 return res.json({
@@ -20,9 +20,9 @@ router.get('/hutang', (req, res) => {
     }
 })
 
-router.get('/hutang/:idPembeli', (req, res) => {
+router.get('/preOrder/:idPembeli', (req, res) => {
     try {
-        let query = `SELECT * FROM hutang WHERE id_pembeli = ${req.params.idPembeli}`;
+        let query = `SELECT * FROM pre_order WHERE id_pembeli = ${req.params.idPembeli}`;
         connection.query(query, (error, result) => {
             if (error) {
                 return res.json({
@@ -38,9 +38,9 @@ router.get('/hutang/:idPembeli', (req, res) => {
     }
 })
 
-router.get('/hutang/:idWarung', (req, res) => {
+router.get('/preOrder/:idWarung', (req, res) => {
     try {
-        let query = `SELECT * FROM hutang WHERE id_warung = ${req.params.idWarung}`;
+        let query = `SELECT * FROM pre_order WHERE id_warung = ${req.params.idWarung}`;
         connection.query(query, (error, result) => {
             if (error) {
                 return res.json({
@@ -56,10 +56,10 @@ router.get('/hutang/:idWarung', (req, res) => {
     }
 })
 
-router.post("/tambahHutang", async (req, res) => {
+router.post("/tambahPreOrder", async (req, res) => {
     try {
         const data = req.body;
-        let query = `INSERT INTO hutang VALUES (DEFAULT, ${data.id_warung}, ${data.id_pembeli}, ${data.tanggal}, ${data.data_hutang}, ${data.batas_pembayaran}, ${data.total_hutang})`;
+        let query = `INSERT INTO pre_order VALUES (DEFAULT, ${data.id_warung}, ${data.id_pembeli}, '${data.data_preorder}', '${data.tanggal}', '${data.status}'`;
         connection.query(query, (error, result) => {
             if (error) {
                 throw new Error(error);
@@ -72,25 +72,25 @@ router.post("/tambahHutang", async (req, res) => {
     }
 })
 
-router.post("/editHutang/:idHutang", async (req, res) => {
+router.post("/editHutang/:idPreOrder", async (req, res) => {
     try {
         const data = req.body;
-        let query = `UPDATE hutang SET data_hutang = '${data.data_hutang}', batas_pembayaran  = '${data.batas_pembayaran}', total_hutang = '${data.total_hutang}' WHERE id_hutang = ${req.params.idHutang}`;
+        let query = `UPDATE hutang SET data_hutang = '${data.data_hutang}' WHERE id_preOrder = ${req.params.idPreOrder}`;
         connection.query(query, (error, result) => {
             if (error) {
                 throw new Error(error);
             }
 
-            res.json("Success");
+            res.json("Update Success");
         })
     } catch (error) {
         res.send(error)
     }
 })
 
-router.delete('/deleteHutang/:idHutang', async(req, res) => {
+router.delete('/deletePreOrder/:idPreOrder', async(req, res) => {
     try {
-        let query = `DELETE FROM hutang where id_hutang = ${req.params.idHutang}`
+        let query = `DELETE FROM pre_order where id_preOrder = ${req.params.idPreOrder}`
         connection.query(query, (error, result) => {
             if (error) {
                 return res.json({
