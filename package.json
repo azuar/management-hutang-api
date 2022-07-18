@@ -2,7 +2,7 @@
   "name": "management-hutang-api",
   "version": "1.0.0",
   "description": "api for management hutang",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
