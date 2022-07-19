@@ -5,9 +5,6 @@ const bodyParser = require('body-parser');
 const usersController = require('./controller/users');
 const hutangController = require('./controller/hutang');
 const preOrderController = require('./controller/pre-orders');
-// const YAML = require('yamljs');
-// const swaggerUi = require('swagger-ui-express');
-// const swaggerDocument = YAML.load('./swagger/auth.yaml');
 const app = express();
 const port = env.PORT || 3000;
 
@@ -16,7 +13,6 @@ app
     .use(bodyParser.json())
     .use(express.urlencoded({ extended: true }))
     .use('/api', usersController, hutangController, preOrderController)
-    // .use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
     .listen(port, () => {
         console.log(`Listen to http://localhost:${port}`)
     })
