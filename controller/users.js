@@ -23,8 +23,8 @@ router.get("/users", (req, res) => {
 
 router.get("/users/:id", (req, res) => {
   try {
-    let query = `SELECT * FROM users WHERE id_user = ${req.params.id}`;
-    connection.query(query, (error, result) => {
+    let query = `SELECT * FROM users WHERE id_user = ?`;
+    connection.query(query,[req.params.id], (error, result) => {
       if (error) {
         return res.json({
           errno: error.errno,
@@ -69,8 +69,8 @@ router.post("/login", async (req, res) => {
         .update(req.body.password)
         .digest("hex");
     }
-    let query = `SELECT * FROM users WHERE no_hp = '${req.body.no_hp}' AND password = '${req.body.password}'`;
-    connection.query(query, (error, result) => {
+    let query = `SELECT * FROM users WHERE no_hp = ? AND password = ?`;
+    connection.query(query,[req.body.no_hp, req.body.password], (error, result) => {
       if (error) {
         return res.json(error);
       }

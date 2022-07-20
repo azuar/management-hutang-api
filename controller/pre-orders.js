@@ -22,8 +22,8 @@ router.get('/preOrder', (req, res) => {
 
 router.get('/preOrder/:idPembeli', (req, res) => {
     try {
-        let query = `SELECT * FROM pre_order WHERE id_pembeli = ${req.params.idPembeli}`;
-        connection.query(query, (error, result) => {
+        let query = `SELECT * FROM pre_order WHERE id_pembeli = ?`;
+        connection.query(query,[req.params.idPembeli], (error, result) => {
             if (error) {
                 return res.json({
                     errno: error.errno,
@@ -40,8 +40,8 @@ router.get('/preOrder/:idPembeli', (req, res) => {
 
 router.get('/preOrder/:idWarung', (req, res) => {
     try {
-        let query = `SELECT * FROM pre_order WHERE id_warung = ${req.params.idWarung}`;
-        connection.query(query, (error, result) => {
+        let query = `SELECT * FROM pre_order WHERE id_warung = ?`;
+        connection.query(query,[req.params.idWarung], (error, result) => {
             if (error) {
                 return res.json({
                     errno: error.errno,
@@ -75,8 +75,8 @@ router.post("/tambahPreOrder", async (req, res) => {
 router.post("/editHutang/:idPreOrder", async (req, res) => {
     try {
         const data = req.body;
-        let query = `UPDATE hutang SET data_hutang = '${data.data_hutang}' WHERE id_preOrder = ${req.params.idPreOrder}`;
-        connection.query(query, (error, result) => {
+        let query = `UPDATE hutang SET data_hutang = ? WHERE id_preOrder = ?`;
+        connection.query(query,[data.data_hutang, req.params.idPreOrder],(error, result) => {
             if (error) {
                 return res.json(error);
             }
@@ -90,8 +90,8 @@ router.post("/editHutang/:idPreOrder", async (req, res) => {
 
 router.delete('/deletePreOrder/:idPreOrder', async(req, res) => {
     try {
-        let query = `DELETE FROM pre_order where id_preOrder = ${req.params.idPreOrder}`
-        connection.query(query, (error, result) => {
+        let query = `DELETE FROM pre_order where id_preOrder = ?`
+        connection.query(query,[req.params.idPreOrder], (error, result) => {
             if (error) {
                 return res.json({
                     errno: error.errno,

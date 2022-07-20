@@ -22,8 +22,8 @@ router.get('/hutang', (req, res) => {
 
 router.get('/hutang/:idPembeli', (req, res) => {
     try {
-        let query = `SELECT * FROM hutang WHERE id_pembeli = ${req.params.idPembeli}`;
-        connection.query(query, (error, result) => {
+        let query = `SELECT * FROM hutang WHERE id_pembeli = ?`;
+        connection.query(query,[req.params.idPembeli], (error, result) => {
             if (error) {
                 return res.json({
                     errno: error.errno,
@@ -40,8 +40,8 @@ router.get('/hutang/:idPembeli', (req, res) => {
 
 router.get('/hutang/:idWarung', (req, res) => {
     try {
-        let query = `SELECT * FROM hutang WHERE id_warung = ${req.params.idWarung}`;
-        connection.query(query, (error, result) => {
+        let query = `SELECT * FROM hutang WHERE id_warung = ?`;
+        connection.query(query,[req.params.idWarung], (error, result) => {
             if (error) {
                 return res.json({
                     errno: error.errno,
@@ -75,8 +75,8 @@ router.post("/tambahHutang", async (req, res) => {
 router.post("/editHutang/:idHutang", async (req, res) => {
     try {
         const data = req.body;
-        let query = `UPDATE hutang SET data_hutang = '${data.data_hutang}', batas_pembayaran  = '${data.batas_pembayaran}', total_hutang = '${data.total_hutang}' WHERE id_hutang = ${req.params.idHutang}`;
-        connection.query(query, (error, result) => {
+        let query = `UPDATE hutang SET data_hutang = ?, batas_pembayaran  = ?, total_hutang = ? WHERE id_hutang = ?`;
+        connection.query(query,[data.data_hutang, data.batas_pembayaran,data.total_hutang, req.params.idHutang], (error, result) => {
             if (error) {
                 return res.json(error);
             }
@@ -90,8 +90,8 @@ router.post("/editHutang/:idHutang", async (req, res) => {
 
 router.delete('/deleteHutang/:idHutang', async(req, res) => {
     try {
-        let query = `DELETE FROM hutang where id_hutang = ${req.params.idHutang}`
-        connection.query(query, (error, result) => {
+        let query = `DELETE FROM hutang where id_hutang = ?`
+        connection.query(query,[req.params.idHutang], (error, result) => {
             if (error) {
                 return res.json({
                     errno: error.errno,
