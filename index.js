@@ -6,7 +6,7 @@ const usersController = require("./controller/users");
 const hutangController = require("./controller/hutang");
 const preOrderController = require("./controller/pre-orders");
 const app = express();
-const port = process.env.PORT || 300
+const port = process.env.PORT || 1234
 
 app
   .use(cors())
