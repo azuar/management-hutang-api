@@ -62,7 +62,7 @@ router.post("/tambahPreOrder", async (req, res) => {
         let query = `INSERT INTO pre_order VALUES (DEFAULT, ${data.id_warung}, ${data.id_pembeli}, '${data.data_preorder}', '${data.tanggal}', '${data.status}'`;
         connection.query(query, (error, result) => {
             if (error) {
-                throw new Error(error);
+                return res.json(error);
             }
 
             res.json("Success");
@@ -78,7 +78,7 @@ router.post("/editHutang/:idPreOrder", async (req, res) => {
         let query = `UPDATE hutang SET data_hutang = '${data.data_hutang}' WHERE id_preOrder = ${req.params.idPreOrder}`;
         connection.query(query, (error, result) => {
             if (error) {
-                throw new Error(error);
+                return res.json(error);
             }
 
             res.json("Update Success");

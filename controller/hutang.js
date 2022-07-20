@@ -62,7 +62,7 @@ router.post("/tambahHutang", async (req, res) => {
         let query = `INSERT INTO hutang VALUES (DEFAULT, ${data.id_warung}, ${data.id_pembeli}, ${data.tanggal}, ${data.data_hutang}, ${data.batas_pembayaran}, ${data.total_hutang})`;
         connection.query(query, (error, result) => {
             if (error) {
-                throw new Error(error);
+                return res.json(error);
             }
 
             res.json("Success");
@@ -78,7 +78,7 @@ router.post("/editHutang/:idHutang", async (req, res) => {
         let query = `UPDATE hutang SET data_hutang = '${data.data_hutang}', batas_pembayaran  = '${data.batas_pembayaran}', total_hutang = '${data.total_hutang}' WHERE id_hutang = ${req.params.idHutang}`;
         connection.query(query, (error, result) => {
             if (error) {
-                throw new Error(error);
+                return res.json(error);
             }
 
             res.json("Success");

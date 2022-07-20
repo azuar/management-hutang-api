@@ -51,7 +51,7 @@ router.post("/register", async (req, res) => {
     let query = `INSERT INTO users VALUES (${data.id_user}, ${data.id_warung}, ${data.id_pembeli}, '${data.nama_warung}', '${data.name}', '${data.no_identitas}', '${data.alamat}', '${data.no_hp}', '${data.foto_diri}', '${data.password}', '${data.type}')`;
     connection.query(query, (error, result) => {
       if (error) {
-        throw new Error(error);
+        return res.json(error);
       }
 
       res.json("Success");
@@ -72,12 +72,12 @@ router.post("/login", async (req, res) => {
     let query = `SELECT * FROM users WHERE no_hp = '${req.body.no_hp}' AND password = '${req.body.password}'`;
     connection.query(query, (error, result) => {
       if (error) {
-        throw new Error(error);
+        return res.json(error);
       }
       if (result.length > 0) {
         return res.json(result[0]);
       }
-      throw new Error(res.status(400).json("Username Or Password Wrong"));
+      return res.json(res.status(400).json("Username Or Password Wrong"));
     });
   } catch (error) {
     res.send(error);
