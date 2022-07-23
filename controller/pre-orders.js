@@ -90,11 +90,11 @@ router.post("/tambahPreOrder", async (req, res) => {
     }
 })
 
-router.post("/editHutang/:idPreOrder", async (req, res) => {
+router.put("/confirmPreorder/:idPreOrder", async (req, res) => {
     try {
         const data = req.body;
-        let query = `UPDATE hutang SET data_hutang = ? WHERE id_preOrder = ?`;
-        connection.query(query,[data.data_hutang, req.params.idPreOrder],(error, result) => {
+        let query = `UPDATE pre_order SET status = ? WHERE id_preOrder = ?`;
+        connection.query(query,[data.status, req.params.idPreOrder],(error, result) => {
             if (error) {
                 return res.json(error);
             }
