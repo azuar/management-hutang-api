@@ -39,6 +39,42 @@ router.get("/users/:id", (req, res) => {
   }
 });
 
+router.get("/users/warung/:idWarung", (req, res) => {
+  try {
+    let query = `SELECT * FROM users WHERE id_warung = ?`;
+    connection.query(query,[req.params.idWarung], (error, result) => {
+      if (error) {
+        return res.json({
+          errno: error.errno,
+          message: error.message,
+        });
+      }
+
+      res.json(result);
+    });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+router.get("/users/pembeli/:idPembeli", (req, res) => {
+  try {
+    let query = `SELECT * FROM users WHERE id_pembeli = ?`;
+    connection.query(query,[req.params.idPembeli], (error, result) => {
+      if (error) {
+        return res.json({
+          errno: error.errno,
+          message: error.message,
+        });
+      }
+
+      res.json(result);
+    });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 router.get("/users/type/:type", (req, res) => {
   try {
     let query = `SELECT * FROM users WHERE type = ?`;
@@ -66,7 +102,7 @@ router.post("/register", async (req, res) => {
         .update(req.body.password)
         .digest("hex");
     }
-    let query = `INSERT INTO users VALUES (${data.id_user}, ${data.id_warung}, ${data.id_pembeli}, '${data.nama_warung}', '${data.name}', '${data.no_identitas}', '${data.alamat}', '${data.no_hp}', '${data.foto_diri}', '${data.password}', '${data.type}')`;
+    let query = `INSERT INTO users VALUES (${data.id_user}, ${data.id_warung}, ${data.id_pembeli}, '${data.nama_warung}', '${data.nama}', '${data.no_identitas}', '${data.alamat}', '${data.no_hp}', '${data.foto_diri}', '${data.password}', '${data.type}')`;
     connection.query(query, (error, result) => {
       if (error) {
         return res.json(error);
@@ -95,7 +131,7 @@ router.post("/login", async (req, res) => {
       if (result.length > 0) {
         return res.json(result[0]);
       }
-      return res.json(res.status(400).json("Username Or Password Wrong"));
+      throw new Error(res.status(400).json("Username Or Password Wrong"));
     });
   } catch (error) {
     res.send(error);
