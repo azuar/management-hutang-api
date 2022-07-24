@@ -20,7 +20,7 @@ router.get('/hutang', (req, res) => {
     }
 })
 
-router.get('/hutang/:idPembeli', (req, res) => {
+router.get('/hutang/pembeli/:idPembeli', (req, res) => {
     try {
         let query = `SELECT * FROM hutang WHERE id_pembeli = ?`;
         connection.query(query,[req.params.idPembeli], (error, result) => {
@@ -38,7 +38,7 @@ router.get('/hutang/:idPembeli', (req, res) => {
     }
 })
 
-router.get('/hutang/:idWarung', (req, res) => {
+router.get('/hutang/warung/:idWarung', (req, res) => {
     try {
         let query = `SELECT * FROM hutang WHERE id_warung = ?`;
         connection.query(query,[req.params.idWarung], (error, result) => {
