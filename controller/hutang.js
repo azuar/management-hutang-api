@@ -23,7 +23,7 @@ router.get('/hutang', (req, res) => {
 router.get('/hutang/pembeli/:idPembeli', (req, res) => {
     try {
         let query = `SELECT * FROM hutang WHERE id_pembeli = ?`;
-        connection.query(query,[req.params.idPembeli], (error, result) => {
+        connection.query(query, [req.params.idPembeli], (error, result) => {
             if (error) {
                 return res.json({
                     errno: error.errno,
@@ -41,7 +41,7 @@ router.get('/hutang/pembeli/:idPembeli', (req, res) => {
 router.get('/hutang/warung/:idWarung', (req, res) => {
     try {
         let query = `SELECT * FROM hutang WHERE id_warung = ?`;
-        connection.query(query,[req.params.idWarung], (error, result) => {
+        connection.query(query, [req.params.idWarung], (error, result) => {
             if (error) {
                 return res.json({
                     errno: error.errno,
@@ -59,7 +59,23 @@ router.get('/hutang/warung/:idWarung', (req, res) => {
 router.post("/tambahHutang", async (req, res) => {
     try {
         const data = req.body;
-        let query = `INSERT INTO hutang VALUES (DEFAULT, ${data.id_warung}, ${data.id_pembeli}, ${data.tanggal}, ${data.data_hutang}, ${data.batas_pembayaran}, ${data.total_hutang})`;
+        let query = `INSERT INTO hutang VALUES (${data.id_hutang}, ${data.id_warung}, ${data.id_pembeli},${data.nama_pembeli}, ${data.tanggal}, ${data.batas_pembayaran}, ${data.total_hutang})`;
+        connection.query(query, (error, result) => {
+            if (error) {
+                return res.json(error);
+            }
+
+            res.json("Success");
+        })
+    } catch (error) {
+        res.send(error)
+    }
+})
+
+router.post("/tambahItemHutang", async (req, res) => {
+    try {
+        const data = req.body;
+        let query = `INSERT INTO items_hutang VALUES (${data.id_item}, ${data.id_hutang}, ${data.item_hutang})`;
         connection.query(query, (error, result) => {
             if (error) {
                 return res.json(error);
@@ -76,7 +92,7 @@ router.post("/editHutang/:idHutang", async (req, res) => {
     try {
         const data = req.body;
         let query = `UPDATE hutang SET data_hutang = ?, batas_pembayaran  = ?, total_hutang = ? WHERE id_hutang = ?`;
-        connection.query(query,[data.data_hutang, data.batas_pembayaran,data.total_hutang, req.params.idHutang], (error, result) => {
+        connection.query(query, [data.data_hutang, data.batas_pembayaran, data.total_hutang, req.params.idHutang], (error, result) => {
             if (error) {
                 return res.json(error);
             }
@@ -88,10 +104,10 @@ router.post("/editHutang/:idHutang", async (req, res) => {
     }
 })
 
-router.delete('/deleteHutang/:idHutang', async(req, res) => {
+router.delete('/deleteHutang/:idHutang', async (req, res) => {
     try {
         let query = `DELETE FROM hutang where id_hutang = ?`
-        connection.query(query,[req.params.idHutang], (error, result) => {
+        connection.query(query, [req.params.idHutang], (error, result) => {
             if (error) {
                 return res.json({
                     errno: error.errno,
