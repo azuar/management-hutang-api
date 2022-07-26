@@ -2,10 +2,10 @@ const express = require('express');
 const connection = require('../serverConfig');
 const router = express.Router();
 
-router.get('/hutang', (req, res) => {
+router.get('/hutang/:id', (req, res) => {
     try {
-        let query = `SELECT * FROM hutang`;
-        connection.query(query, (error, result) => {
+        let query = `SELECT * FROM hutang WHERE id_hutang = ?`;
+        connection.query(query,[req.params.id], (error, result) => {
             if (error) {
                 return res.json({
                     errno: error.errno,
@@ -59,7 +59,7 @@ router.get('/hutang/warung/:idWarung', (req, res) => {
 router.post("/tambahHutang", async (req, res) => {
     try {
         const data = req.body;
-        let query = `INSERT INTO hutang VALUES (${data.id_hutang}, ${data.id_warung}, ${data.id_pembeli},${data.nama_pembeli}, ${data.tanggal}, ${data.batas_pembayaran}, ${data.total_hutang})`;
+        let query = `INSERT INTO hutang VALUES (${data.id_hutang}, ${data.id_warung}, ${data.id_pembeli},'${data.nama_pembeli}', '${data.tanggal}', '${data.batas_pembayaran}', ${data.total_hutang})`;
         connection.query(query, (error, result) => {
             if (error) {
                 return res.json(error);
@@ -75,7 +75,7 @@ router.post("/tambahHutang", async (req, res) => {
 router.post("/tambahItemHutang", async (req, res) => {
     try {
         const data = req.body;
-        let query = `INSERT INTO items_hutang VALUES (${data.id_item}, ${data.id_hutang}, ${data.item_hutang})`;
+        let query = `INSERT INTO items_hutang VALUES (${data.id_item}, ${data.id_hutang}, '${data.item_hutang}', ${data.harga})`;
         connection.query(query, (error, result) => {
             if (error) {
                 return res.json(error);
