@@ -39,24 +39,6 @@ router.get("/users/:id", (req, res) => {
   }
 });
 
-router.get("/users/pembeli", (req, res) => {
-  try {
-    let query = `SELECT * FROM users WHERE type = pembeli`;
-    connection.query(query, (error, result) => {
-      if (error) {
-        return res.json({
-          errno: error.errno,
-          message: error.message,
-        });
-      }
-
-      res.json(result);
-    });
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
-
 router.get("/users/warung/:idWarung", (req, res) => {
   try {
     let query = `SELECT * FROM users WHERE id_warung = ?`;
