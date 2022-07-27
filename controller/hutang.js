@@ -109,8 +109,8 @@ router.post("/tambahItemHutang", async (req, res) => {
 router.post("/editHutang/:idHutang", async (req, res) => {
     try {
         const data = req.body;
-        let query = `UPDATE hutang SET data_hutang = ?, batas_pembayaran  = ?, total_hutang = ? WHERE id_hutang = ?`;
-        connection.query(query, [data.data_hutang, data.batas_pembayaran, data.total_hutang, req.params.idHutang], (error, result) => {
+        let query = `UPDATE hutang SET batas_pembayaran  = ?, total_hutang = ? WHERE id_hutang = ?`;
+        connection.query(query, [data.batas_pembayaran, data.total_hutang, req.params.idHutang], (error, result) => {
             if (error) {
                 return res.json(error);
             }
